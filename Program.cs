@@ -16,6 +16,7 @@ Console.WriteLine(" 1 vedi stato lavatrici " );
 Console.WriteLine(" 2 vedi stato asciugatrici");
 Console.WriteLine(" 3 vedi stato di tutti i macchinari");
 Console.WriteLine(" 4 vedi tutti i lavaggi ");
+Console.WriteLine(" 5 incassi ");
 int selezioneMenu = Convert.ToInt32(Console.ReadLine());
 
 
@@ -58,6 +59,10 @@ void menu(int selezioneMenu) {
             Console.WriteLine("lavaggi eseguiti da tutte le macchine");
             lavanderia.Mostralavaggi();
             
+            break;
+        case 5:
+            Console.WriteLine( "questi sono gli incassi attuali" );
+            lavanderia.Incassi();
             break;
 
         default:
@@ -102,8 +107,7 @@ menu(selezioneMenu);
 
 class Lavanderia
 {
-    protected int GettoniUsati { get; set; }
-    private float gettoniValore;
+    protected int Gettoni { get; set; }
     protected int DetersivoConsumato { get; set; }
     protected int AmmorbidenteConsumato { get; set; }
 
@@ -115,23 +119,31 @@ class Lavanderia
     {
         lavatrici = new Lavatrice[5];
         asciugatrici = new Asciugatrice[5];
-        this.gettoniValore = 0.50f;
         // da aggiungere la creazine delle istanze per le lavatrici e le asciugatrici
 
         for (int i = 0; i < lavatrici.Length ; i++)
         {
             string nome = "L" + Convert.ToString(i + 1);
             this.lavatrici[i] = new Lavatrice(nome);
+            Gettoni += lavatrici[i].GettoniGuadagnati;
         }
 
         for (int i = 0; i < asciugatrici.Length; i++)
         {
             string nome = "A" + Convert.ToString(i +1);
             this.asciugatrici[i] = new Asciugatrice(nome);
+            Gettoni += asciugatrici[i].GettoniGuadagnati;
         }
     }
 
-    
+    public void Incassi()
+    {
+        Console.WriteLine(" i gettoni guadagnati sono " + Gettoni);
+        int valore = Gettoni / 2;
+        Console.WriteLine();
+        Console.WriteLine("il guadagno in euro è " + valore + "€");
+    }
+
 
     // metodi da aggiungere = vedere corrispettivo guadagnato- generare 24 ore di lavoro random - avere le info delle macchine
     public void MostraLavatrici()
@@ -208,6 +220,8 @@ class Lavatrice
     public string Nome { get; set; }
     public int Detersivo { get; set; }
     public int Ammorbidente { get; set; } 
+
+    public int GettoniGuadagnati { get; set; }
     public bool Stato { get; set; }
 
     public Lavaggio[] lavaggio;
@@ -227,6 +241,7 @@ class Lavatrice
             Lavaggio attuale = new Lavaggio(selezionato);
             this.AttualeLavaggio = attuale.Tipo;
             Detersivo -= attuale.DetersivoImpiegato;
+            GettoniGuadagnati += attuale.CostoGettoni;
         }
         else
         {
@@ -240,6 +255,7 @@ class Lavatrice
             int selezionato = new Random().Next( 1, 3 );
             this.lavaggio[i] = new Lavaggio(selezionato);
             Detersivo -= lavaggio[i].DetersivoImpiegato;
+            GettoniGuadagnati += lavaggio[i].CostoGettoni;
         }
     }
 
@@ -311,6 +327,8 @@ class Asciugatrice
 {
     public string Nome { get; set; }
 
+    public int GettoniGuadagnati {get; set; }
+
     public string Attivita {get; set; }
     public bool Stato { get; set; }
 
@@ -326,6 +344,7 @@ class Asciugatrice
             int selezionato = new Random().Next(1, 3);
             Asciugatura attuale = new Asciugatura(selezionato);
             this.Attivita = attuale.Tipo;
+            GettoniGuadagnati += attuale.CostoGettoni;
         }
         else
         {
@@ -339,6 +358,7 @@ class Asciugatrice
         {
             int selezionato = new Random().Next(1, 3);
             this.asciugature[i] = new Asciugatura(selezionato);
+            GettoniGuadagnati += asciugature[i].CostoGettoni;
         }
     }
 

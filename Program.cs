@@ -12,14 +12,25 @@ Lavanderia lavanderia = new Lavanderia();
 
 Console.WriteLine("digita cosa vuoi fare");
 
-Console.WriteLine(" 1 usa una lavatrice ");
+Console.WriteLine(" 1 vedi stato lavatrici " );
+Console.WriteLine(" 2 vedi stato asciugatrici");
+Console.WriteLine(" 3 vedi stato di tutti i macchinari");
 
 void menu() {
     switch ( Convert.ToInt32(Console.ReadLine()))
     {
         case 1:
-            Console.WriteLine("1 scegli lavatrice");
+            Console.WriteLine("stato lavatrici");
             lavanderia.MostraLavatrici();
+            break;
+        case 2:
+            Console.WriteLine("stato asciugatrici");
+            lavanderia.MostraAsciugatrici();
+            break;
+        case 3:
+            Console.WriteLine("stato macchinari");
+            lavanderia.MostraLavatrici();
+            lavanderia.MostraAsciugatrici();
             break;
 
         default:
@@ -27,6 +38,8 @@ void menu() {
             break;
     }
 }
+
+
 
 menu();
 
@@ -43,8 +56,8 @@ class Lavanderia
     protected int DetersivoConsumato { get; set; }
     protected int AmmorbidenteConsumato { get; set; }
 
-    private Lavatrice[] lavatrici;
-    private Asciugatrice[] asciugatrici;
+    public Lavatrice[] lavatrici {get; private set;}
+    public Asciugatrice[] asciugatrici { get; private set; }
 
 
     public Lavanderia()
@@ -56,13 +69,13 @@ class Lavanderia
 
         for (int i = 0; i < lavatrici.Length ; i++)
         {
-            string nome = "L " + Convert.ToString(i);
+            string nome = "L" + Convert.ToString(i + 1);
             this.lavatrici[i] = new Lavatrice(nome);
         }
 
         for (int i = 0; i < asciugatrici.Length; i++)
         {
-            string nome = "A " + Convert.ToString(i);
+            string nome = "A" + Convert.ToString(i +1);
             this.asciugatrici[i] = new Asciugatrice(nome);
         }
     }
@@ -91,8 +104,25 @@ class Lavanderia
             {
                 stato = " in uso";
             }
-            Console.WriteLine("1 - " + lavatrici[i].Nome + stato);
+            Console.WriteLine((i+1) + " - " + lavatrici[i].Nome + stato);
         }
+
+         object lav =  Convert.ToInt32(Console.ReadLine());
+    }
+
+    public void MostraAsciugatrici()
+    {
+        for (int i = 0; i < lavatrici.Length; i++)
+        {
+            string stato = " utilizzabile";
+            if (asciugatrici[i].Stato)
+            {
+                stato = " in uso";
+            }
+            Console.WriteLine((i + 1) + " - " + asciugatrici[i].Nome + stato);
+        }
+
+        object lav = Convert.ToInt32(Console.ReadLine());
     }
 }
 
@@ -120,7 +150,7 @@ class Lavatrice
 
     // metodi da aggiungere = inserire i 3 programmi di lavoro delle lavatrici
     //Rinfrescante, costo di 2 gettoni, durata di 20 minuti, consumo di 20ml di detersivo e 5ml di ammorbidente.
-    void Rinfrescante(Lavanderia lavanderia)
+    public void Rinfrescante(Lavanderia lavanderia)
     {
         // TODO aggiungere orario di fine usando i 20 minuti
         if (this.Stato == false) 
@@ -140,7 +170,7 @@ class Lavatrice
 
 
     //   Rinnovante, costo di 3 gettoni, durata di 40 minuti, consumo di 40ml di detersivo e 10ml di ammorbidente.
-    void Rinnovante(Lavanderia lavanderia)
+    public void Rinnovante(Lavanderia lavanderia)
     {
         // TODO aggiungere orario di fine usando i 40 minuti
         if (this.Stato == false)
@@ -158,7 +188,7 @@ class Lavatrice
 
     }
     //Sgrassante, costo di 4 gettoni, durata di 60 minuti, consumo di 60 ml di detersivo e 15ml di ammorbidente.
-    void Sgrassante(Lavanderia lavanderia)
+    public void Sgrassante(Lavanderia lavanderia)
     {
         // TODO aggiungere orario di fine usando i 60 minuti
         if (this.Stato == false)
@@ -174,6 +204,7 @@ class Lavatrice
         lavanderia.UsoLavatrici(gettoni, detersivo, ammorbidente);
 
     }
+
 }
 
 class Asciugatrice

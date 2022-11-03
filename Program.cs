@@ -5,6 +5,37 @@
 
 // passo 2) creazione delle lavatrici dalla classe genitore
 
+// passo 3) creazione interazioni con utente e spostare a fondo pagina le classi create
+
+
+Lavanderia lavanderia = new Lavanderia();
+
+Console.WriteLine("digita cosa vuoi fare");
+
+Console.WriteLine(" 1 usa una lavatrice ");
+
+void menu() {
+    switch ( Convert.ToInt32(Console.ReadLine()))
+    {
+        case 1:
+            Console.WriteLine("1 scegli lavatrice");
+            lavanderia.MostraLavatrici();
+            break;
+
+        default:
+            menu();
+            break;
+    }
+}
+
+menu();
+
+
+
+
+
+
+
 class Lavanderia
 {
     protected int GettoniUsati { get; set; }
@@ -12,28 +43,27 @@ class Lavanderia
     protected int DetersivoConsumato { get; set; }
     protected int AmmorbidenteConsumato { get; set; }
 
-    private int[] lavatrici;
+    private Lavatrice[] lavatrici;
+    private Asciugatrice[] asciugatrici;
 
-    private int[] asciugatrici;
 
-    private Lavanderia()
+    public Lavanderia()
     {
+        lavatrici = new Lavatrice[5];
+        asciugatrici = new Asciugatrice[5];
         this.gettoniValore = 0.50f;
-        this.lavatrici = new int[5];
-        this.asciugatrici = new int[5];
-
         // da aggiungere la creazine delle istanze per le lavatrici e le asciugatrici
 
-        for (int i = 0; i < (this.lavatrici.Length -1) ; i++)
+        for (int i = 0; i < lavatrici.Length ; i++)
         {
-            string nome = "L" + Convert.ToString(i - 1);
-            Lavatrice lavatrice = new Lavatrice(nome);
+            string nome = "L " + Convert.ToString(i);
+            this.lavatrici[i] = new Lavatrice(nome);
         }
 
-        for (int i = 0; i < (this.asciugatrici.Length - 1); i++)
+        for (int i = 0; i < asciugatrici.Length; i++)
         {
-            string nome = "A" + Convert.ToString(i - 1);
-            Asciugatrice asciugatrice = new Asciugatrice(nome);
+            string nome = "A " + Convert.ToString(i);
+            this.asciugatrici[i] = new Asciugatrice(nome);
         }
     }
 
@@ -49,8 +79,21 @@ class Lavanderia
         this.GettoniUsati += gettoni;
     }
 
-    // metodi da aggiungere = vedere corrispettivo guadagnato- generare 24 ore di lavoro random - avere le info delle macchine
+    
 
+    // metodi da aggiungere = vedere corrispettivo guadagnato- generare 24 ore di lavoro random - avere le info delle macchine
+    public void MostraLavatrici()
+    {
+        for (int i = 0; i < lavatrici.Length; i++)
+        {
+            string stato = " utilizzabile";
+            if(lavatrici[i].Stato)
+            {
+                stato = " in uso";
+            }
+            Console.WriteLine("1 - " + lavatrici[i].Nome + stato);
+        }
+    }
 }
 
 class Lavatrice

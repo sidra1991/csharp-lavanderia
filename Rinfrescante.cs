@@ -4,7 +4,7 @@
 class Rinfrescante : Programma
 {
     public int CostoGettoni { get; set; }
-    public int Tempo { get; set; }
+    public double Tempo { get; set; }
     public int DetersivoImpiegato { get; set; }
 
     public int AmmorbidenteImpiegato { get; set; }
@@ -18,10 +18,10 @@ class Rinfrescante : Programma
         DetersivoImpiegato = 20;
         AmmorbidenteImpiegato = 5;
         lavatriceImpiegata = macchina;
-        oraInizio = DateTime.Now.TimeOfDay.ToString();
-        TimeSpan span = new TimeSpan(0, Tempo, 0);
-        oraFine = oraInizio + span;
-        macchina.programmi.Add(this);
+        oraInizio = DateTime.Now.TimeOfDay;
+        //TimeSpan span = new TimeSpan(0, Tempo, 0);
+        DateTime date = new DateTime();
+        oraFine = DateTime.Now.AddMinutes(Tempo).TimeOfDay;
 
         if ( !macchina.Stato)
         {

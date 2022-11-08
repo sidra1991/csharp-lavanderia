@@ -4,7 +4,7 @@
 class Intenso : Programma
 {
     public int CostoGettoni { get; set; }
-    public int Tempo { get; set; }
+    public double Tempo { get; set; }
     public int DetersivoImpiegato { get; set; }
 
     public int AmmorbidenteImpiegato { get; set; }
@@ -18,9 +18,10 @@ class Intenso : Programma
         DetersivoImpiegato = 60;
         AmmorbidenteImpiegato = 15;
         lavatriceImpiegata = macchina;
-        oraInizio = DateTime.Now.TimeOfDay.ToString();
-        TimeSpan span = new TimeSpan(0, Tempo, 0);
-        oraFine = oraInizio + span;
+        oraInizio = DateTime.Now.TimeOfDay;
+        //TimeSpan span = new TimeSpan(0, Tempo, 0);
+        DateTime date = new DateTime();
+        oraFine = DateTime.Now.AddMinutes(Tempo).TimeOfDay;
         macchina.programmi.Add(this);
 
         if (!macchina.Stato)

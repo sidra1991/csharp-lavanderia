@@ -5,8 +5,8 @@ public abstract class Programma
     public string Tipo { get; set; }
     public string programma { get; set; }
 
-    public string oraInizio { get; set; }
-    public string oraFine { get; set; }
+    public TimeSpan oraInizio { get; set; }
+    public TimeSpan oraFine { get; set; }
     public abstract void Attiva();
 
 }

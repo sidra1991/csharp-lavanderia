@@ -405,10 +405,10 @@ for (int i = 0; i < 5; i++)
 Random random = new Random();
 for (int i = 0; i < lavanderia.macchine.Count; i++)
 {
-    int clar = random.Next(1, 10) % 4;
+    int clar = random.Next(1, 10);
     Macchina macchina = lavanderia.macchine[i];
-    if (lavanderia.macchine[i].Tipo == "lavatrice")
-        
+    if (lavanderia.macchine[i].Tipo == "lavatrice") { 
+        clar = clar % 4;
         switch (clar)
         {
             case 0:
@@ -425,17 +425,20 @@ for (int i = 0; i < lavanderia.macchine.Count; i++)
                 break;
             default:
                 break;
-        }
-    else
+        } 
+    } 
+    else if(lavanderia.macchine[i].Tipo == "asciugatrice")
     {
+        clar = clar % 3;
         switch (clar)
         {
-            case 1:
-                Rinnovante rinnovante = new Rinnovante(macchina);
+            case 0:
+
+                Rapido rinnovante = new Rapido(macchina);
                 macchina.programmi.Add(rinnovante);
                 break;
-            case 2:
-                Intenso intenso = new Intenso(macchina);
+            case 1:
+                IntensoAsciugatrice intenso = new IntensoAsciugatrice(macchina);
                 macchina.programmi.Add(intenso);
                 break;
             default:
@@ -443,18 +446,6 @@ for (int i = 0; i < lavanderia.macchine.Count; i++)
         }
     }
 }
-
-
-//////case 1:
-//////                Tipo = "rapido";
-//////                CostoGettoni = 2;
-//////                Tempo = 30;
-//////                break;
-//////            case 2:
-//////                Tipo = "intensso";
-//////                CostoGettoni = 4;
-//////                Tempo = 60;
-//////                break;
 
 //funzioniutili
 int testNumero()

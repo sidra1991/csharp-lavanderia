@@ -20,9 +20,12 @@ class Intenso : Programma
         AmmorbidenteImpiegato = 15;
         lavatriceImpiegata = macchina;
 
-        if (macchina.Detersivo > DetersivoImpiegato && macchina.Ammorbidente > AmmorbidenteImpiegato)
+        if (!macchina.Stato)
         {
-            Attiva();
+            if (macchina.Detersivo > DetersivoImpiegato && macchina.Ammorbidente > AmmorbidenteImpiegato)
+            {
+                Attiva();
+            }
         }
     }
     public override void Attiva()

@@ -20,9 +20,12 @@ class Rinfrescante : Programma
         AmmorbidenteImpiegato = 5;
         lavatriceImpiegata = macchina;
 
-        if ( macchina.Detersivo > DetersivoImpiegato && macchina.Ammorbidente > AmmorbidenteImpiegato )
+        if ( !macchina.Stato)
         {
-            Attiva();
+            if (macchina.Detersivo > DetersivoImpiegato && macchina.Ammorbidente > AmmorbidenteImpiegato )
+            {
+                Attiva();
+            }
         }
     }
     public override void Attiva()

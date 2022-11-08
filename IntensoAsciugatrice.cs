@@ -382,196 +382,27 @@
 
 
 //////}
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-///
-Lavanderia lavanderia = new Lavanderia();
+class IntensoAsciugatrice : Programma
+{
+    public string Tipo { get; set; }
+    public int CostoGettoni { get; set; }
+    public int Tempo { get; set; }
 
-//creazione macchine
-for (int i = 0; i < 5; i++)
-{
-    string nome = "L" + i;
-    Lavatrice lavatrice = new Lavatrice(nome);
-    lavanderia.macchine.Add(lavatrice);
-}
-for (int i = 0; i < 5; i++)
-{
-    string nome = "A" + i;
-    Asciugatrice asciugatrice = new Asciugatrice(nome);
-    lavanderia.macchine.Add(asciugatrice);
-}
-
-//modifica stato random
-Random random = new Random();
-for (int i = 0; i < lavanderia.macchine.Count; i++)
-{
-    int clar = random.Next(1, 10) % 4;
-    Macchina macchina = lavanderia.macchine[i];
-    if (lavanderia.macchine[i].Tipo == "lavatrice")
-        
-        switch (clar)
-        {
-            case 0:
-                Rinfrescante rinfrescante = new Rinfrescante(macchina);
-                macchina.programmi.Add(rinfrescante);
-                break;
-            case 1:
-                Rinnovante rinnovante = new Rinnovante(macchina);
-                macchina.programmi.Add(rinnovante);
-                break;
-            case 2:
-                Intenso intenso = new Intenso(macchina);
-                macchina.programmi.Add(intenso);
-                break;
-            default:
-                break;
-        }
-    else
+    public Macchina asciugatriceImpiegata;
+    public IntensoAsciugatrice(Macchina macchina)
     {
-        switch (clar)
+        Tipo = "intenso";
+        CostoGettoni = 3;
+        Tempo = 30;
+        asciugatriceImpiegata = macchina;
+
+        if (!macchina.Stato)
         {
-            case 1:
-                Rinnovante rinnovante = new Rinnovante(macchina);
-                macchina.programmi.Add(rinnovante);
-                break;
-            case 2:
-                Intenso intenso = new Intenso(macchina);
-                macchina.programmi.Add(intenso);
-                break;
-            default:
-                break;
+            Attiva();
         }
     }
-}
-
-
-//////case 1:
-//////                Tipo = "rapido";
-//////                CostoGettoni = 2;
-//////                Tempo = 30;
-//////                break;
-//////            case 2:
-//////                Tipo = "intensso";
-//////                CostoGettoni = 4;
-//////                Tempo = 60;
-//////                break;
-
-//funzioniutili
-int testNumero()
-{
-
-    int libero;
-
-    string tester = Console.ReadLine();
-    int number;
-
-    bool success = int.TryParse(tester, out number);
-    if (success)
+    public override void Attiva()
     {
-        libero = Convert.ToInt32(tester);
-    }
-    else
-    {
-        Console.WriteLine("mi spiace non è un numero");
-        libero = testNumero();
-    }
-
-
-    return libero;
-}
-
-//contolla le risposte affermative o negative del utente
-bool siOno()
-{
-    string testo = Convert.ToString(Console.ReadLine());
-    if (testo == "si" || testo == "yes" || testo == "y" || testo == "s")
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-
-}
-
-
-//generatore
-
-
-void menu()
-{
-    Console.WriteLine("chi sta usando il programma");
-    Console.WriteLine("1. un utente ");
-    Console.WriteLine("2. il gestore");
-
-    int scelta = testNumero();
-
-    switch(scelta)
-    {
-        case 1:
-            menuCliente();
-            break;
-        case 2:
-            menuGestore();
-            break;
-    }
-
-
-}
-
-
-void menuCliente()
-{
-    Console.WriteLine("cosa devi fare? ");
-    Console.WriteLine("1. guarda stato macchine ");
-
-    int scelta = testNumero();
-
-    switch (scelta)
-    {
-        case 1:
-            statoMacchine();
-            break;
+        asciugatriceImpiegata.Stato = true;
     }
 }
-
-void menuGestore()
-{
-    Console.WriteLine("cosa devi fare? ");
-    Console.WriteLine("1. guarda stato macchine ");
-
-    int scelta = testNumero();
-
-    switch (scelta)
-    {
-        case 1:
-            statoMacchine();
-            break;
-    }
-}
-
-void statoMacchine()
-{
-    for (int i = 0; i < lavanderia.macchine.Count; i++)
-    {
-        string stato;
-        if (lavanderia.macchine[i].Stato)
-        {
-            stato = "in funzione";
-        }
-        else
-        {
-            stato = "inattiva";
-        }
-        Console.WriteLine("la macchina " + lavanderia.macchine[i].Tipo + " " + lavanderia.macchine[i].Nome);
-        Console.WriteLine("la macchina è " + stato);
-        Console.WriteLine("----------------------------------------------");
-
-    }
-}
-
-
-
-
-menu();

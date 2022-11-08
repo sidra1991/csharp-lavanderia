@@ -524,6 +524,7 @@ void menuCliente()
     {
         case 1:
             statoMacchine();
+            menuCliente();
             break;
         case 2:
             dettaioMacchine();
@@ -544,14 +545,14 @@ void dettaioMacchine()
     }
 
     Console.WriteLine("nome "+ macchina.Nome);
-    Console.WriteLine("tipo " + macchina.Tipo);
-    Console.WriteLine("stato " + status);
+    Console.WriteLine("tipo macchina " + macchina.Tipo);
+    Console.WriteLine("stato -----" + status);
     Console.WriteLine("gettoni incassati " + macchina.GettoniGuadagnati);
     if (macchina.Stato) {
-        Console.WriteLine("programma attivo " + macchina.programmi[macchina.programmi.Count - 1]);
-        Console.WriteLine("programma attivo " + macchina.programmi[macchina.programmi.Count - 1].);
+        Console.WriteLine("programma attivo " + macchina.programmi[macchina.programmi.Count - 1].programma);
+        Console.WriteLine("ora inizio programma attivo " + macchina.programmi[macchina.programmi.Count - 1].oraInizio);
     }
-    Console.WriteLine("nome " + macchina.);
+    
 }
 
 Macchina ricercaMacchina()
@@ -604,6 +605,7 @@ void menuGestore()
     {
         case 1:
             statoMacchine();
+            menuGestore();
             break;
         case 2:
             dettaioMacchine();

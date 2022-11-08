@@ -12,7 +12,5 @@ class Macchina
     public int Detersivo { get; set; }
     public int Ammorbidente { get; set; }
 
-    public 
-
 
 }

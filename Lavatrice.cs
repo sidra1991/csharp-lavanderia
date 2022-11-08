@@ -11,6 +11,7 @@ class Lavatrice : Macchina
         Ammorbidente = 500;
         GettoniGuadagnati = 0;
         Stato = false;
+
     }
 
 }

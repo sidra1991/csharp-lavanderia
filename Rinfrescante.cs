@@ -3,7 +3,6 @@
 
 class Rinfrescante : Programma
 {
-    public string Tipo { get; set; }
     public int CostoGettoni { get; set; }
     public int Tempo { get; set; }
     public int DetersivoImpiegato { get; set; }
@@ -19,6 +18,10 @@ class Rinfrescante : Programma
         DetersivoImpiegato = 20;
         AmmorbidenteImpiegato = 5;
         lavatriceImpiegata = macchina;
+        oraInizio = DateTime.Now.TimeOfDay.ToString();
+        TimeSpan span = new TimeSpan(0, Tempo, 0);
+        oraFine = oraInizio + span;
+        macchina.programmi.Add(this);
 
         if ( !macchina.Stato)
         {
@@ -33,13 +36,8 @@ class Rinfrescante : Programma
         lavatriceImpiegata.Stato = true;
         lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
         lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
-        Disattiva(Thread.Sleep(2000););
     }
 
-    public override void Disattiva()
-    {
-        throw new NotImplementedException();)
-    }
 }
 //////            case 3:
 //////                Tipo = "rinfrescante";

@@ -384,7 +384,6 @@
 //////}
 class IntensoAsciugatrice : Programma
 {
-    public string Tipo { get; set; }
     public int CostoGettoni { get; set; }
     public int Tempo { get; set; }
 
@@ -395,6 +394,10 @@ class IntensoAsciugatrice : Programma
         CostoGettoni = 3;
         Tempo = 30;
         asciugatriceImpiegata = macchina;
+        oraInizio = DateTime.Now.TimeOfDay.ToString();
+        TimeSpan span = new TimeSpan(0, Tempo, 0);
+        oraFine = oraInizio + span;
+        macchina.programmi.Add(this);
 
         if (!macchina.Stato)
         {
@@ -404,5 +407,6 @@ class IntensoAsciugatrice : Programma
     public override void Attiva()
     {
         asciugatriceImpiegata.Stato = true;
+        asciugatriceImpiegata.GettoniGuadagnati += CostoGettoni;
     }
 }

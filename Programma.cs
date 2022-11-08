@@ -2,8 +2,12 @@
 
 public abstract class Programma
 {
+    public string Tipo { get; set; }
+    public string programma { get; set; }
+
+    public string oraInizio { get; set; }
+    public string oraFine { get; set; }
     public abstract void Attiva();
-    public abstract void Disattiva();
 
 }
 //////            case 3:

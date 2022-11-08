@@ -4,6 +4,7 @@ class Asciugatrice : Macchina
 {
     public Asciugatrice(string nome)
     {
+        
         Tipo = "asciugatrice";
         programmi = new List<Programma>();
         Nome = nome;

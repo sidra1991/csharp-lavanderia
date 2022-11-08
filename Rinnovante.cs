@@ -3,7 +3,6 @@
 
 class Rinnovante : Programma
 {
-    public string Tipo { get; set; }
     public int CostoGettoni { get; set; }
     public int Tempo { get; set; }
     public int DetersivoImpiegato { get; set; }
@@ -19,7 +18,10 @@ class Rinnovante : Programma
         DetersivoImpiegato = 40;
         AmmorbidenteImpiegato = 10;
         lavatriceImpiegata = macchina;
-
+        oraInizio = DateTime.Now.TimeOfDay.ToString();
+        TimeSpan span = new TimeSpan(0, Tempo, 0);
+        oraFine = oraInizio + span;
+        macchina.programmi.Add(this);
         if (!macchina.Stato)
         {
             if (macchina.Detersivo > DetersivoImpiegato && macchina.Ammorbidente > AmmorbidenteImpiegato)
@@ -34,7 +36,6 @@ class Rinnovante : Programma
         lavatriceImpiegata.Stato = true;
         lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
         lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
-        disattiva(Thread.Sleep(2000););
     }
 }
 //////            case 3:

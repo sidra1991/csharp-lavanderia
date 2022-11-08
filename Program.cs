@@ -383,24 +383,66 @@
 
 //////}
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 ///
-new Lavanderia();
+Lavanderia lavanderia = new Lavanderia();
 
 //creazione macchine
 for (int i = 0; i < 5; i++)
 {
     string nome = "L" + i;
     Lavatrice lavatrice = new Lavatrice(nome);
+    lavanderia.macchine.Add(lavatrice);
 }
-for (int i = 0; i < 5; i++)
-{
-    string nome = "A" + i;
-    Asciugatrice asciugatrice = new Asciugatrice(nome);
-}
+//for (int i = 0; i < 5; i++)
+//{
+//    string nome = "A" + i;
+//    Asciugatrice asciugatrice = new Asciugatrice(nome);
+//    lavanderia.macchine.Add(asciugatrice);
+//}
 
 // modifica stato random
-    
-
+Random random = new Random();
+for (int i = 0; i < lavanderia.macchine.Count; i++)
+{
+    int clar = random.Next(1, 10) % 4;
+    Macchina macchina = lavanderia.macchine[i];
+    if (lavanderia.macchine[i].Tipo == "lavatrice")
+        
+        switch (clar)
+        {
+            case 0:
+                Rinfrescante rinfrescante = new Rinfrescante(macchina);
+                macchina.programmi.Add(rinfrescante);
+                break;
+            case 1:
+                Rinnovante rinnovante = new Rinnovante(macchina);
+                macchina.programmi.Add(rinnovante);
+                break;
+            case 2:
+                Intenso intenso = new Intenso(macchina);
+                macchina.programmi.Add(intenso);
+                break;
+            default:
+                break;
+        }
+    //else
+    //{
+    //    switch (clar)
+    //    {
+    //        case 1:
+    //            Rinnovante rinnovante = new Rinnovante(macchina);
+    //            macchina.programmi.Add(rinnovante);
+    //            break;
+    //        case 2:
+    //            Intenso intenso = new Intenso(macchina);
+    //            macchina.programmi.Add(intenso);
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
+}
 
 //funzioniutili
 int testNumero()
@@ -470,209 +512,77 @@ void menu()
 void menuCliente()
 {
     Console.WriteLine("cosa devi fare? ");
-    Console.WriteLine("1. guarda stato lavatrici ");
+    Console.WriteLine("1. guarda stato macchine ");
+
+    int scelta = testNumero();
+
+    switch (scelta)
+    {
+        case 1:
+            statoMacchine();
+            break;
+    }
 }
 
 void menuGestore()
 {
     Console.WriteLine("cosa devi fare? ");
-    Console.WriteLine("1. guarda stato lavatrici ");
+    Console.WriteLine("1. guarda stato macchine ");
+
+    int scelta = testNumero();
+
+    switch (scelta)
+    {
+        case 1:
+            statoMacchine();
+            break;
+    }
+}
+
+void statoMacchine()
+{
+    for (int i = 0; i < lavanderia.macchine.Count; i++)
+    {
+        string stato;
+        if (lavanderia.macchine[i].Stato)
+        {
+            stato = "in funzione";
+        }
+        else
+        {
+            stato = "inattiva";
+        }
+        Console.WriteLine("la macchina " + lavanderia.macchine[i].Tipo + " " + lavanderia.macchine[i].Nome);
+        Console.WriteLine("la macchina è " + stato);
+       
+    }
 }
 
 
 
+
+menu();
 
 class Lavanderia
 {
     public int Gettoni { get; set; }
 
-    public List<Lavatrice> lavatrici { get; private set; }
-    public List<Asciugatrice> asciugatrici { get; private set; }
+    public List<Macchina> macchine { get; private set; }
 
     public Lavanderia()
     {
+        macchine = new List<Macchina>();    
         Gettoni = 0;
     }
 } 
-
-class Macchina
-{
-    public string Nome { get; set; }
-    public int GettoniGuadagnati { get; set; }
-    public bool Stato { get; set; }
-}
-
-class Lavatrice : Macchina
-{
-    
-    public int Detersivo { get; set; }
-    public int Ammorbidente { get; set; }
-
-
-    public Lavatrice(string nome)
-    {
-        Nome = nome;
-        Detersivo = 1000;
-        Ammorbidente = 500;
-        GettoniGuadagnati = 0;
-        Stato = false;
-    }
-
-}
 
 class Asciugatrice : Macchina
 {
     public Asciugatrice(string nome)
     {
+        programmi = new List<Programma>();
         Nome = nome;
         GettoniGuadagnati = 0;
         Stato = false;
     }
 }
-
-public abstract class Programma
-{
-    public abstract void Attiva();
-
-}
-
-class Rinfrescante : Programma
-{
-    public string Tipo { get; set; }
-    public int CostoGettoni { get; set; }
-    public int Tempo { get; set; }
-    public int DetersivoImpiegato { get; set; }
-
-    public int AmmorbidenteImpiegato { get; set; }
-
-    public Lavatrice lavatriceImpiegata;
-    public Rinfrescante(Lavatrice lavatrice)
-    {
-        Tipo = "rinfrescante";
-        CostoGettoni = 2;
-        Tempo = 20;
-        DetersivoImpiegato = 20;
-        AmmorbidenteImpiegato = 5;
-        lavatriceImpiegata = lavatrice;
-
-        if ( lavatrice.Detersivo > DetersivoImpiegato && lavatrice.Ammorbidente > AmmorbidenteImpiegato )
-        {
-            Attiva();
-        }
-    }
-    public override void Attiva()
-    {
-        lavatriceImpiegata.Stato = true;
-        lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
-        lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
-
-    }
-}
-
-class Rinnovante : Programma
-{
-    public string Tipo { get; set; }
-    public int CostoGettoni { get; set; }
-    public int Tempo { get; set; }
-    public int DetersivoImpiegato { get; set; }
-
-    public int AmmorbidenteImpiegato { get; set; }
-
-    public Lavatrice lavatriceImpiegata;
-    public Rinnovante(Lavatrice lavatrice)
-    {
-        Tipo = "rinnovante";
-        CostoGettoni = 3;
-        Tempo = 40;
-        DetersivoImpiegato = 40;
-        AmmorbidenteImpiegato = 10;
-        lavatriceImpiegata = lavatrice;
-
-        if (lavatrice.Detersivo > DetersivoImpiegato && lavatrice.Ammorbidente > AmmorbidenteImpiegato)
-        {
-            Attiva();
-        }
-    }
-    public override void Attiva()
-    {
-        lavatriceImpiegata.GettoniGuadagnati += CostoGettoni;
-        lavatriceImpiegata.Stato = true;
-        lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
-        lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
-
-    }
-}
-
-class Rinnovante : Programma
-{
-    public string Tipo { get; set; }
-    public int CostoGettoni { get; set; }
-    public int Tempo { get; set; }
-    public int DetersivoImpiegato { get; set; }
-
-    public int AmmorbidenteImpiegato { get; set; }
-
-    public Lavatrice lavatriceImpiegata;
-    public Rinnovante(Lavatrice lavatrice)
-    {
-        Tipo = "rinnovante";
-        CostoGettoni = 3;
-        Tempo = 40;
-        DetersivoImpiegato = 40;
-        AmmorbidenteImpiegato = 10;
-        lavatriceImpiegata = lavatrice;
-
-        if (lavatrice.Detersivo > DetersivoImpiegato && lavatrice.Ammorbidente > AmmorbidenteImpiegato)
-        {
-            Attiva();
-        }
-    }
-    public override void Attiva()
-    {
-        lavatriceImpiegata.GettoniGuadagnati += CostoGettoni;
-        lavatriceImpiegata.Stato = true;
-        lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
-        lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
-
-    }
-}
-class Intenso : Programma
-{
-    public string Tipo { get; set; }
-    public int CostoGettoni { get; set; }
-    public int Tempo { get; set; }
-    public int DetersivoImpiegato { get; set; }
-
-    public int AmmorbidenteImpiegato { get; set; }
-
-    public Lavatrice lavatriceImpiegata;
-    public Intenso(Lavatrice lavatrice)
-    {
-        Tipo = "intenso";
-        CostoGettoni = 4;
-        Tempo = 60;
-        DetersivoImpiegato = 60;
-        AmmorbidenteImpiegato = 15;
-        lavatriceImpiegata = lavatrice;
-
-        if (lavatrice.Detersivo > DetersivoImpiegato && lavatrice.Ammorbidente > AmmorbidenteImpiegato)
-        {
-            Attiva();
-        }
-    }
-    public override void Attiva()
-    {
-        lavatriceImpiegata.GettoniGuadagnati += CostoGettoni;
-        lavatriceImpiegata.Stato = true;
-        lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
-        lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
-
-    }
-}
-//////            case 3:
-//////                Tipo = "rinfrescante";
-//////                CostoGettoni = 4;
-//////                Tempo = 60;
-//////                DetersivoImpiegato = 60;
-//////                AmmorbidenteImpiegato = 15;
-//////                break;

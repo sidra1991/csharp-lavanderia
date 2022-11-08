@@ -3,6 +3,7 @@
 public abstract class Programma
 {
     public abstract void Attiva();
+    public abstract void Disattiva();
 
 }
 //////            case 3:

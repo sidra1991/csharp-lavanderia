@@ -33,7 +33,12 @@ class Rinfrescante : Programma
         lavatriceImpiegata.Stato = true;
         lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
         lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
+        Disattiva(Thread.Sleep(2000););
+    }
 
+    public override void Disattiva()
+    {
+        throw new NotImplementedException();)
     }
 }
 //////            case 3:

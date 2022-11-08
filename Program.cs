@@ -516,6 +516,7 @@ void menuCliente()
 {
     Console.WriteLine("cosa devi fare? ");
     Console.WriteLine("1. guarda stato macchine ");
+    Console.WriteLine("2. guarda dettaglio macchine ");
 
     int scelta = testNumero();
 
@@ -524,13 +525,78 @@ void menuCliente()
         case 1:
             statoMacchine();
             break;
+        case 2:
+            dettaioMacchine();
+            break;
     }
+}
+
+void dettaioMacchine()
+{
+   Macchina macchina= ricercaMacchina();
+    string status;
+    if (macchina.Stato)
+    {
+        status = "in funzione";
+    }else
+    {
+        status = "inattiva";
+    }
+
+    Console.WriteLine("nome "+ macchina.Nome);
+    Console.WriteLine("tipo " + macchina.Tipo);
+    Console.WriteLine("stato " + status);
+    Console.WriteLine("gettoni incassati " + macchina.GettoniGuadagnati);
+    if (macchina.Stato) {
+        Console.WriteLine("programma attivo " + macchina.programmi[macchina.programmi.Count - 1]);
+        Console.WriteLine("programma attivo " + macchina.programmi[macchina.programmi.Count - 1].);
+    }
+    Console.WriteLine("nome " + macchina.);
+}
+
+Macchina ricercaMacchina()
+{
+    Console.WriteLine("digita nome della macchina che vuoi vedere");
+    List<Macchina> trovate = new List<Macchina>();
+    string nome = Console.ReadLine();
+
+    for (int i = 0; i < lavanderia.macchine.Count;i++)
+    {
+        if (lavanderia.macchine[i].Nome == nome)
+        {
+            trovate.Add(lavanderia.macchine[i]);
+        }
+    }
+
+    if (trovate.Count == 0)
+    {
+        Console.WriteLine("macchina non trovata riprova");
+        return ricercaMacchina();
+    }else if(trovate.Count > 1)
+    {
+        Console.WriteLine("scegli la macchina mediante");
+        for (int i = 0; i < trovate.Count; i++)
+        {
+            Console.WriteLine( "1. " + trovate[i].Nome + " "+ trovate[i].Tipo);
+        }
+        int selezione = testNumero();
+
+        if (selezione > trovate.Count)
+        {
+            selezione = 1;
+        }
+
+        return trovate[selezione - 1];
+    }
+    else { return trovate[0]; }
+
+    
 }
 
 void menuGestore()
 {
-    Console.WriteLine("cosa devi fare? ");
     Console.WriteLine("1. guarda stato macchine ");
+    Console.WriteLine("2. guarda dettaglio macchine ");
 
     int scelta = testNumero();
 
@@ -538,6 +604,9 @@ void menuGestore()
     {
         case 1:
             statoMacchine();
+            break;
+        case 2:
+            dettaioMacchine();
             break;
     }
 }

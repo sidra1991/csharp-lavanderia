@@ -34,7 +34,7 @@ class Rinnovante : Programma
         lavatriceImpiegata.Stato = true;
         lavatriceImpiegata.Detersivo -= DetersivoImpiegato;
         lavatriceImpiegata.Ammorbidente -= AmmorbidenteImpiegato;
-
+        disattiva(Thread.Sleep(2000););
     }
 }
 //////            case 3:
